@@ -174,9 +174,8 @@ def create_fastapi_app() -> FastAPI:
             db = connect_db();
 
             sql = f"""select p.Name from pokemon p
-                    inner join trainer_pokemon_abilities tpa on p.id = tpa.pokemon_id
-                    inner join types t on t.id = tpa.type_id
-                    where t.name = ?
+                    inner join types t on t.id = p.type1_id or t.id = p.type2_id
+					where t.name = ?
                     """
             
             cursor = db.cursor();
